@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTech | Sua Ajuda Digital</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS V3.0 - CORES MAIS QUENTES E AMIGÁVEIS --- */
+        :root {
+            /* Azul mais vibrante e amigável, menos corporativo frio */
+            --primary: #2563eb; 
+            --primary-dark: #1d4ed8;
+            /* Verde mais natural e quente, tipo esmeralda/natureza */
+            --secondary: #10b981; 
+            
+            --bg-body: #f8fafc; /* Fundo ligeiramente mais quente que o cinza anterior */
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --sidebar-width: 260px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body { background-color: var(--bg-body); color: var(--text-main); height: 100vh; overflow: hidden; }
+
+        /* UTILITÁRIOS */
+        .btn {
+            padding: 12px 20px; border: none; border-radius: 10px;
+            font-weight: 600; cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            font-size: 15px;
+        }
+        .btn-primary { background-color: var(--primary); color: white; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); }
+        .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3); }
+        
+        .btn-secondary { background-color: var(--secondary); color: white; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2); }
+        .btn-secondary:hover { background-color: #059669; transform: translateY(-2px); }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .toggle-link { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
+        .toggle-link:hover { text-decoration: underline; }
+
+        /* TELA DE ACESSO (LOGIN/REGISTRO) - Fundo mais quente */
+        #access-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            /* Degradê mais suave e quente: azul claro para verde claro */
+            background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            padding: 20px;
+        }
+
+        .access-card {
+            background: var(--surface); padding: 40px; width: 100%; max-width: 420px;
+            border-radius: 24px; box-shadow: var(--shadow-lg); text-align: center;
+            border: 1px solid #f1f5f9;
+        }
+        .access-card h1 { color: var(--text-main); font-size: 26px; font-weight: 700; }
+        .access-card input {
+            width: 100%; padding: 14px 16px; margin: 8px 0; border: 2px solid #e2e8f0;
+            border-radius: 10px; background: #f8fafc; outline: none; transition: 0.2s; font-size: 15px;
+        }
+        .access-card input:focus { border-color: var(--primary); background: white; }
+
+        /* Container que alterna entre login e registro */
+        .form-container { display: none; animation: fadeIn 0.3s ease; }
+        .form-container.active { display: block; }
+
+        /* LOADING SPINNER */
+        .spinner {
+            display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* DASHBOARD LAYOUT */
+        #dashboard { display: none; height: 100vh; }
+
+        /* SIDEBAR - Mais limpa */
+        aside {
+            width: var(--sidebar-width); background: var(--surface);
+            display: flex; flex-direction: column; padding: 30px 20px;
+            border-right: 1px solid #f1f5f9;
+        }
+        .logo-area { margin-bottom: 50px; display: flex; align-items: center; gap: 12px; }
+        .logo-icon-bg { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 10px; border-radius: 12px; color: white; box-shadow: var(--shadow-sm); }
+        
+        .nav-btn {
+            background: transparent; border: none; width: 100%; padding: 14px;
+            text-align: left; cursor: pointer; color: var(--text-muted); font-size: 15px;
+            display: flex; align-items: center; gap: 12px; border-radius: 12px;
+            margin-bottom: 8px; font-weight: 500; transition: 0.2s;
+        }
+        .nav-btn:hover { background-color: #f1f5f9; color: var(--primary); }
+        .nav-btn.active { background-color: #eff6ff; color: var(--primary); font-weight: 700; }
+        
+        /* CONTEÚDO PRINCIPAL */
+        main { flex: 1; padding: 40px; overflow-y: auto; position: relative; background-color: var(--bg-body); }
+        header { margin-bottom: 30px; }
+        header h1 { font-size: 28px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        
+        /* CARDS GERAIS */
+        .card-box {
+            background: var(--surface); padding: 30px; border-radius: 20px;
+            box-shadow: var(--shadow-sm); border: 1px solid #f1f5f9;
+        }
+
+        /* GRID DE PLANOS - Com novas cores */
+        .plans-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px; margin-top: 20px;
+        }
+        .plan-card {
+            background: var(--surface); padding: 30px; border-radius: 20px;
+            text-align: center; box-shadow: var(--shadow-sm); border: 1px solid #f1f5f9;
+            transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .plan-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        
+        /* Destaque Premium mais quente */
+        .plan-card.premium { 
+            border: 2px solid var(--secondary); 
+            background: linear-gradient(to bottom, #ecfdf5, white); 
+        }
+        .popular-tag {
+            position: absolute; top: 15px; right: -30px; background: var(--secondary); color: white;
+            padding: 5px 30px; font-size: 11px; font-weight: bold; transform: rotate(45deg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .plan-icon { font-size: 48px; margin-bottom: 20px; display: inline-block; }
+        .price-tag { font-size: 32px; font-weight: 800; color: var(--text-main); margin: 15px 0; letter-spacing: -1px; }
+        .price-tag span { font-size: 15px; color: var(--text-muted); font-weight: 500; }
+        .features-list { list-style: none; text-align: left; margin: 25px 0; color: var(--text-muted); font-size: 14px; }
+        .features-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: 500; }
+        .check-icon { color: var(--secondary); font-size: 18px; background: #dcfce7; padding: 2px; border-radius: 50%; }
+
+        /* VÍDEOS */
+        .video-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;
+        }
+        .video-frame {
+            border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid #f1f5f9;
+        }
+
+        /* BOTÃO FLUTUANTE WHATSAPP */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: linear-gradient(135deg, #25D366, #128C7E); color: white;
+            padding: 14px 24px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            cursor: pointer; font-weight: 700; text-decoration: none;
+            transition: 0.3s; z-index: 999; font-size: 15px;
+        }
+        .whatsapp-float:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 25px rgba(37, 211, 102, 0.5); }
+
+        /* UTILS */
+        .section-content { display: none; animation: fadeUp 0.4s ease; }
+        .section-content.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <div id="access-screen">
+        <div class="access-card">
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <div class="logo-icon-bg">
+                    <i class="ph-fill ph-heart" style="font-size: 32px;"></i>
+                </div>
+            </div>
+            
+            <div id="login-container" class="form-container active">
+                <h1 style="margin-bottom: 10px;">Bem-vindo de volta!</h1>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Acesse sua conta GTech.</p>
+                
+                <form id="login-form">
+                    <input type="email" placeholder="E-mail" value="cliente@gtech.com" required>
+                    <input type="password" placeholder="Senha" value="123456" required>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px; padding: 14px;">
+                        <span class="btn-text">Entrar no Sistema</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+
+                <p style="margin-top: 25px; color: var(--text-muted); font-size: 14px;">
+                    Ainda não tem conta? <span id="show-register" class="toggle-link">Crie agora</span>
+                </p>
+            </div>
+
+            <div id="register-container" class="form-container">
+                <h1 style="margin-bottom: 10px;">Crie sua conta</h1>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Preencha os dados para começar.</p>
+                
+                <form id="register-form">
+                    <input type="text" placeholder="Nome Completo" required>
+                    <input type="email" placeholder="E-mail" required>
+                    <input type="tel" placeholder="WhatsApp (com DDD)" required>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="password" placeholder="Senha" required>
+                        <input type="password" placeholder="Confirmar Senha" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 20px; padding: 14px;">
+                        <span class="btn-text">Criar Minha Conta</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+
+                <p style="margin-top: 25px; color: var(--text-muted); font-size: 14px;">
+                    Já tem cadastro? <span id="show-login" class="toggle-link">Fazer login</span>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="dashboard">
+        <aside>
+            <div class="logo-area">
+                <div class="logo-icon-bg">
+                    <i class="ph-fill ph-heart" style="font-size: 24px;"></i>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-main); font-weight: 800;">GTech</h3>
+                    <span style="font-size: 13px; color: var(--primary); font-weight: 600;">Ajuda Digital</span>
+                </div>
+            </div>
+            
+            <nav>
+                <button class="nav-btn active" data-target="intro">
+                    <i class="ph-fill ph-house"></i> Início
+                </button>
+                <button class="nav-btn" data-target="planos">
+                    <i class="ph-fill ph-credit-card"></i> Contratar Serviços
+                </button>
+                <button class="nav-btn" data-target="videos">
+                    <i class="ph-fill ph-youtube-logo"></i> Vídeos e Tutoriais
+                </button>
+                <button class="nav-btn" data-target="perfil">
+                    <i class="ph-fill ph-user-circle"></i> Meus Dados
+                </button>
+            </nav>
+
+            <div style="margin-top: auto;">
+                <button onclick="logout()" class="nav-btn" style="color: #ef4444; background: #fef2f2;">
+                    <i class="ph-fill ph-sign-out"></i> Sair da conta
+                </button>
+            </div>
+        </aside>
+
+        <main>
+            <header>
+                <h1 id="greeting-text">Bem-vindo!</h1>
+                <p style="color: var(--text-muted); font-size: 16px;">Seu painel de segurança e independência digital.</p>
+            </header>
+
+            <section id="intro" class="section-content active">
+                <div class="card-box" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <h2 style="font-size: 24px; margin-bottom: 10px;">Precisa de ajuda agora?</h2>
+                            <p style="opacity: 0.95; font-size: 15px; max-width: 500px;">Nosso time está pronto para acessar seu celular remotamente e resolver qualquer problema com paciência.</p>
+                        </div>
+                        <i class="ph-fill ph-headset" style="font-size: 64px; opacity: 0.5;"></i>
+                    </div>
+                    <button class="btn" style="background: white; color: var(--primary); margin-top: 25px; font-weight: 700;">Chamar Técnico no Zap</button>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h3 style="font-size: 20px; margin-bottom: 20px;">Atalhos Rápidos</h3>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <div class="card-box" style="flex: 1; min-width: 220px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.borderColor=var(--primary)" onmouseout="this.style.borderColor='#f1f5f9'">
+                            <div style="background: #dcfce7; padding: 12px; border-radius: 12px;">
+                                <i class="ph-fill ph-whatsapp-logo" style="font-size: 28px; color: var(--secondary);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px;">Golpes no Zap</h4>
+                                <p style="font-size: 13px; color: var(--text-muted);">Como identificar?</p>
+                            </div>
+                        </div>
+                        <div class="card-box" style="flex: 1; min-width: 220px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.borderColor=var(--primary)" onmouseout="this.style.borderColor='#f1f5f9'">
+                            <div style="background: #dbeafe; padding: 12px; border-radius: 12px;">
+                                <i class="ph-fill ph-bank" style="font-size: 28px; color: var(--primary);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px;">Banco Seguro</h4>
+                                <p style="font-size: 13px; color: var(--text-muted);">Configurar limites</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="planos" class="section-content">
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <span class="plan-icon" style="color: var(--primary);">📱</span>
+                        <h3>Check-up Celular</h3>
+                        <div class="price-tag">R$ 55,00</div>
+                        <ul class="features-list">
+                            <li><i class="ph-bold ph-check check-icon"></i> Letras maiores</li>
+                            <li><i class="ph-bold ph-check check-icon"></i> Limpeza de memória</li>
+                            <li><i class="ph-bold ph-check check-icon"></i> Atalhos fáceis</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%; padding: 14px;">Contratar Agora</button>
+                    </div>
+
+                    <div class="plan-card">
+                        <span class="plan-icon" style="color: var(--secondary);">🛡️</span>
+                        <h3>Blindagem Total</h3>
+                        <div class="price-tag">R$ 85,00</div>
+                        <ul class="features-list">
+                            <li><i class="ph-bold ph-check check-icon"></i> Anti-Golpe Zap</li>
+                            <li><i class="ph-bold ph-check check-icon"></i> Bloqueio de Spam</li>
+                            <li><i class="ph-bold ph-check check-icon"></i> Limites PIX</li>
+                        </ul>
+                        <button class="btn btn-secondary" style="width: 100%; padding: 14px;">Contratar Agora</button>
+                    </div>
+
+                    <div class="plan-card">
+                        <span class="plan-icon" style="color: #f59e0b;">🎓</span>
+                        <h3>Aulão Prático</h3>
+                        <div class="price-tag">R$ 75,00</div>
+                        <ul class="features-list">
+                            <li><i class="ph-bold ph-check check-icon"></i> Aula de 1 hora</li>
+                            <li><i class="ph-bold ph-check check-icon"></i> Apostila PDF</li>
+                            <li><i class="ph-bold ph-check check-icon"></i> Aprenda Uber/iFood</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%; padding: 14px; background-color: #f59e0b;">Agendar Aula</button>
+                    </div>
+
+                    <div class="plan-card premium">
+                        <div class="popular-tag">MAIS ESCOLHIDO</div>
+                        <span class="plan-icon" style="color: var(--secondary);">👑</span>
+                        <h3>Assinatura Premium</h3>
+                        <div class="price-tag">R$ 125,00<span>/mês</span></div>
+                        <ul class="features-list">
+                            <li><i class="ph-fill ph-star check-icon" style="background: var(--secondary); color: white;"></i> Suporte Ilimitado</li>
+                            <li><i class="ph-fill ph-star check-icon" style="background: var(--secondary); color: white;"></i> Acesso Remoto</li>
+                            <li><i class="ph-fill ph-star check-icon" style="background: var(--secondary); color: white;"></i> Prioridade Total</li>
+                        </ul>
+                        <button class="btn btn-secondary" style="width: 100%; padding: 14px; font-weight: 700; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">Assinar Premium</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="videos" class="section-content">
+                <div class="video-container">
+                    <div class="video-frame">
+                        <iframe width="100%" height="220" src="https://www.youtube.com/embed/5Peo-ivmupE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <div style="padding: 20px; background: white;">
+                            <h4 style="font-size: 18px;">Dicas de Segurança Digital</h4>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;">Aprenda o básico para identificar mensagens suspeitas e não cair em ciladas na internet.</p>
+                            <button class="btn" style="margin-top: 15px; background: #f1f5f9; color: var(--text-main); font-size: 13px; padding: 8px 16px;">Assistir Aula</button>
+                        </div>
+                    </div>
+                    <div class="video-frame">
+                        <iframe width="100%" height="220" src="https://www.youtube.com/embed/inpOkctrNsM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <div style="padding: 20px; background: white;">
+                            <h4 style="font-size: 18px;">Como aumentar a letra do Celular</h4>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;">Tutorial rápido e fácil para deixar a tela do seu Android muito mais fácil de ler.</p>
+                            <button class="btn" style="margin-top: 15px; background: #f1f5f9; color: var(--text-main); font-size: 13px; padding: 8px 16px;">Assistir Aula</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="perfil" class="section-content">
+                <div class="card-box" style="display: flex; align-items: center; gap: 25px;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: 700; box-shadow: var(--shadow-md);">
+                        CA
+                    </div>
+                    <div>
+                        <h2 style="font-size: 24px;">Cliente Amigo</h2>
+                        <p style="color: var(--text-muted); font-size: 16px; margin-top: 5px;">cliente@gtech.com</p>
+                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; color: #166534; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;">
+                                <i class="ph-fill ph-check-circle"></i> Membro Ativo
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <a href="https://wa.me/5500000000000" target="_blank" class="whatsapp-float">
+                <i class="ph-fill ph-whatsapp-logo" style="font-size: 28px;"></i>
+                Falar no Zap
+            </a>
+
+        </main>
+    </div>
+
+    <script>
+        // --- LÓGICA DE ALTERNAR ENTRE LOGIN E REGISTRO ---
+        const loginContainer = document.getElementById('login-container');
+        const registerContainer = document.getElementById('register-container');
+        const showRegisterBtn = document.getElementById('show-register');
+        const showLoginBtn = document.getElementById('show-login');
+
+        showRegisterBtn.addEventListener('click', () => {
+            loginContainer.classList.remove('active');
+            registerContainer.classList.add('active');
+        });
+
+        showLoginBtn.addEventListener('click', () => {
+            registerContainer.classList.remove('active');
+            loginContainer.classList.add('active');
+        });
+
+        // --- FUNÇÃO GENÉRICA DE SUBMIT (Simula carregamento) ---
+        function handleFormSubmit(event, formId) {
+            event.preventDefault();
+            const form = document.getElementById(formId);
+            const btn = form.querySelector('button');
+            const btnText = btn.querySelector('.btn-text');
+            const spinner = btn.querySelector('.spinner');
+            
+            // Trava o botão e mostra spinner
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            spinner.style.display = 'block';
+
+            // Simula espera de 2 segundos
+            setTimeout(() => {
+                document.getElementById('access-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex';
+                updateGreeting();
+                
+                // Reseta o botão (para quando fizer logout)
+                btn.disabled = false;
+                btnText.style.display = 'block';
+                spinner.style.display = 'none';
+            }, 2000);
+        }
+
+        // Listeners para os formulários
+        document.getElementById('login-form').addEventListener('submit', (e) => handleFormSubmit(e, 'login-form'));
+        document.getElementById('register-form').addEventListener('submit', (e) => handleFormSubmit(e, 'register-form'));
+
+
+        // --- SAUDAÇÃO ---
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            const greetingElement = document.getElementById('greeting-text');
+            let greeting = 'Bem-vindo!';
+            if (hour >= 5 && hour < 12) greeting = 'Bom dia! ☀️';
+            else if (hour >= 12 && hour < 18) greeting = 'Boa tarde! 🌤️';
+            else greeting = 'Boa noite! 🌙';
+            greetingElement.innerText = greeting;
+        }
+
+        // --- NAVEGAÇÃO DE ABAS ---
+        const navButtons = document.querySelectorAll('.nav-btn[data-target]');
+        const sections = document.querySelectorAll('.section-content');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navButtons.forEach(b => b.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                btn.classList.add('active');
+                const target = btn.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // --- LOGOUT ---
+        function logout() {
+            if(confirm('Tem certeza que deseja sair?')) {
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
