@@ -8,132 +8,102 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS V5.0 FINAL (CORRIGIDO PARA PC E CELULAR) --- */
+        /* --- CSS GERAL --- */
         :root {
             --primary: #2563eb; 
-            --primary-dark: #1d4ed8;
             --secondary: #10b981; 
             --bg-body: #f8fafc;
-            --surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
             --sidebar-width: 260px;
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-body); color: #1e293b; height: 100vh; overflow: hidden; }
 
-        body { background-color: var(--bg-body); color: var(--text-main); height: 100vh; overflow: hidden; }
-
-        /* --- LAYOUT DO SISTEMA (A CORREÇÃO ESTÁ AQUI) --- */
+        /* --- DASHBOARD (Layout Principal) --- */
         #dashboard {
-            display: none; /* Escondido por padrão */
-            height: 100vh;
-            width: 100%;
-        }
-        
-        /* Classe que ativaremos via JS para manter o Flexbox no PC */
-        #dashboard.active-flex {
-            display: flex !important;
+            height: 100vh; width: 100%;
+            display: none; /* Escondido até logar */
+            position: relative;
         }
 
-        /* --- SIDEBAR (PC) --- */
+        /* --- REGRAS PARA COMPUTADOR (PC) --- */
+        @media (min-width: 769px) {
+            #dashboard {
+                display: flex !important; /* Força lado a lado */
+                flex-direction: row;
+            }
+            aside {
+                position: relative !important; 
+                transform: none !important;
+                height: 100vh !important;
+                flex-shrink: 0;
+                box-shadow: none !important;
+                border-right: 1px solid #e2e8f0;
+            }
+            main { flex-grow: 1; width: auto; }
+            #mobile-menu-btn, #overlay { display: none !important; }
+        }
+
+        /* --- REGRAS PARA CELULAR --- */
+        @media (max-width: 768px) {
+            aside {
+                position: fixed; top: 0; left: 0; height: 100%;
+                transform: translateX(-100%); /* Escondido */
+                box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            }
+            aside.mobile-active { transform: translateX(0); }
+            #mobile-menu-btn { display: block; position: fixed; top: 15px; left: 15px; z-index: 1100; background: white; border: none; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 24px; }
+            main { padding: 80px 20px 100px 20px; }
+            .plans-grid { grid-template-columns: 1fr; }
+        }
+
+        /* --- SIDEBAR --- */
         aside {
-            width: var(--sidebar-width);
-            background: var(--surface);
+            width: var(--sidebar-width); background: white;
             display: flex; flex-direction: column; padding: 30px 20px;
-            border-right: 1px solid #e2e8f0;
-            z-index: 100;
-            transition: transform 0.3s ease;
-            flex-shrink: 0; /* Impede que a sidebar encolha */
+            z-index: 100; transition: transform 0.3s ease;
         }
 
-        /* --- CONTEÚDO PRINCIPAL --- */
-        main {
-            flex: 1; /* Ocupa todo o espaço restante */
-            padding: 40px;
-            overflow-y: auto; /* Garante a rolagem */
-            background-color: var(--bg-body);
-            height: 100vh;
-        }
+        /* --- CONTEÚDO --- */
+        main { padding: 40px; overflow-y: auto; height: 100vh; background-color: var(--bg-body); }
 
-        /* --- TELA DE ACESSO --- */
+        /* --- TELA DE LOGIN --- */
         #access-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
             display: flex; justify-content: center; align-items: center; z-index: 2000;
         }
-        .access-card {
-            background: white; padding: 40px; border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px;
-        }
-        .access-card input {
-            width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #e2e8f0;
-            border-radius: 10px; outline: none;
-        }
+        .access-card { background: white; padding: 40px; border-radius: 24px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .access-card input { width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; }
         .form-container { display: none; }
         .form-container.active { display: block; animation: fadeIn 0.3s; }
 
-        /* --- COMPONENTES --- */
-        .btn {
-            padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px;
-        }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: var(--secondary); color: white; }
+        /* --- ESTILOS VISUAIS --- */
+        .btn { padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 20px; color: white; }
+        .btn-primary { background: var(--primary); }
+        .btn-secondary { background: var(--secondary); }
         
-        .card-box, .plan-card {
-            background: white; padding: 25px; border-radius: 20px;
-            box-shadow: var(--shadow-md); border: 1px solid #f1f5f9; margin-bottom: 20px;
-        }
-        
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Garante que caibam lado a lado */
-            gap: 25px;
-            padding-bottom: 50px; /* Espaço extra no final */
-        }
-
-        .plan-card { text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
-        .plan-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card-box, .plan-card { background: white; padding: 25px; border-radius: 20px; border: 1px solid #f1f5f9; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; padding-bottom: 50px; }
+        .plan-card:hover { transform: translateY(-5px); border-color: var(--primary); transition: 0.3s; }
         .plan-card.premium { border: 2px solid var(--secondary); background: linear-gradient(to bottom, #f0fdf4, white); }
-        .popular-tag {
-            position: absolute; top: 15px; right: -30px; background: var(--secondary); color: white;
-            padding: 5px 30px; font-size: 10px; font-weight: bold; transform: rotate(45deg);
-        }
-
-        .features-list { list-style: none; text-align: left; margin: 20px 0; font-size: 14px; color: var(--text-muted); }
+        
+        .features-list { list-style: none; text-align: left; margin: 20px 0; font-size: 14px; color: #64748b; }
         .features-list li { margin-bottom: 10px; display: flex; gap: 8px; align-items: center; }
         .check-icon { color: var(--secondary); background: #dcfce7; padding: 2px; border-radius: 50%; }
-
-        .whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px;
-            background: #25D366; color: white; padding: 15px 25px; border-radius: 50px;
-            display: flex; align-items: center; gap: 10px; font-weight: bold; text-decoration: none;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); z-index: 999;
-        }
-
+        
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; padding: 15px 25px; border-radius: 50px; display: flex; gap: 10px; font-weight: bold; text-decoration: none; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); z-index: 999; }
+        
         .section-content { display: none; animation: fadeUp 0.4s; }
         .section-content.active { display: block; }
         
-        .logo-icon-bg { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 8px; border-radius: 10px; color: white; }
         .nav-btn { background: none; border: none; width: 100%; padding: 15px; text-align: left; cursor: pointer; color: #64748b; font-size: 15px; display: flex; gap: 10px; border-radius: 10px; }
         .nav-btn.active { background: #eff6ff; color: var(--primary); font-weight: 700; }
+        .logo-icon-bg { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 8px; border-radius: 10px; color: white; display: inline-flex; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- MOBILE (CELULAR) --- */
-        #mobile-menu-btn { display: none; position: fixed; top: 15px; left: 15px; z-index: 1100; background: white; border: none; padding: 10px; border-radius: 8px; box-shadow: var(--shadow-md); font-size: 24px; }
         #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 90; }
-
-        @media (max-width: 768px) {
-            aside { position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%); box-shadow: 0 0 20px rgba(0,0,0,0.2); }
-            aside.mobile-active { transform: translateX(0); }
-            #mobile-menu-btn { display: block; }
-            main { padding: 80px 20px 100px 20px; } /* Ajuste de padding para caber conteúdo */
-            .plans-grid { grid-template-columns: 1fr; } /* 1 coluna no celular */
-        }
     </style>
 </head>
 <body>
@@ -142,36 +112,33 @@
 
     <div id="access-screen">
         <div class="access-card">
-            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-                <div class="logo-icon-bg"><i class="ph-fill ph-heart" style="font-size: 32px;"></i></div>
-            </div>
+            <div style="margin-bottom: 20px;"><div class="logo-icon-bg"><i class="ph-fill ph-heart" style="font-size: 32px;"></i></div></div>
             
             <div id="login-container" class="form-container active">
                 <h1 style="margin-bottom: 10px;">Bem-vindo!</h1>
                 <p style="color: #64748b; margin-bottom: 20px;">Acesse a GTech.</p>
                 <form onsubmit="handleLogin(event)">
-                    <input type="email" placeholder="E-mail" value="cliente@gtech.com" required>
-                    <input type="password" placeholder="Senha" value="123456" required>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Entrar no Sistema</button>
+                    <input type="email" placeholder="E-mail" required>
+                    <input type="password" placeholder="Senha" required>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
                 </form>
-                <p style="margin-top: 20px; font-size: 13px; color: #64748b; cursor: pointer;" onclick="toggleAuth()">Não tem conta? <span style="color: var(--primary); font-weight: bold;">Criar agora</span></p>
+                <p style="margin-top: 20px; font-size: 13px; cursor: pointer; color: #64748b;" onclick="toggleAuth()">Criar conta</p>
             </div>
 
             <div id="register-container" class="form-container">
                 <h1 style="margin-bottom: 10px;">Criar Conta</h1>
-                <form onsubmit="handleLogin(event)">
-                    <input type="text" placeholder="Nome" required>
+                <form onsubmit="handleRegister(event)">
+                    <input type="text" placeholder="Nome Completo" required>
                     <input type="email" placeholder="E-mail" required>
                     <input type="password" placeholder="Senha" required>
-                    <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">Cadastrar</button>
+                    <button type="submit" class="btn btn-secondary">Cadastrar</button>
                 </form>
-                <p style="margin-top: 20px; font-size: 13px; color: #64748b; cursor: pointer;" onclick="toggleAuth()">Já tem conta? <span style="color: var(--primary); font-weight: bold;">Entrar</span></p>
+                <p style="margin-top: 20px; font-size: 13px; cursor: pointer; color: #64748b;" onclick="toggleAuth()">Voltar para Login</p>
             </div>
         </div>
     </div>
 
     <div id="dashboard">
-        
         <button id="mobile-menu-btn" onclick="toggleMenu()"><i class="ph-bold ph-list"></i></button>
 
         <aside id="sidebar">
@@ -186,7 +153,7 @@
                 <button class="nav-btn" onclick="navigate('perfil')"><i class="ph-fill ph-user-circle"></i> Perfil</button>
             </nav>
             <div style="margin-top: auto;">
-                <button onclick="location.reload()" class="nav-btn" style="color: #ef4444;"><i class="ph-fill ph-sign-out"></i> Sair</button>
+                <button onclick="logout()" class="nav-btn" style="color: #ef4444;"><i class="ph-fill ph-sign-out"></i> Sair</button>
             </div>
         </aside>
 
@@ -200,58 +167,40 @@
                 <div class="card-box" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none;">
                     <h2>Precisa de ajuda?</h2>
                     <p style="margin: 10px 0 20px; opacity: 0.9;">Nosso time resolve problemas no seu celular agora.</p>
-                    <button class="btn" style="background: white; color: var(--primary);">Chamar no Zap</button>
+                    <button class="btn" style="background: white; color: var(--primary); width: auto; display: inline-block; margin-top: 10px;">Chamar no Zap</button>
                 </div>
             </section>
 
             <section id="planos" class="section-content">
                 <div class="plans-grid">
-                    
                     <div class="plan-card">
                         <span style="font-size: 40px; color: var(--primary);">📱</span>
                         <h3>Check-up</h3>
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b; margin: 10px 0;">R$ 55,00</div>
-                        <ul class="features-list">
-                            <li><i class="ph-bold ph-check check-icon"></i> Letras maiores</li>
-                            <li><i class="ph-bold ph-check check-icon"></i> Limpeza memória</li>
-                        </ul>
-                        <button class="btn btn-primary" style="width: 100%;">Contratar</button>
+                        <div style="font-size: 24px; font-weight: bold; margin: 10px 0;">R$ 55,00</div>
+                        <ul class="features-list"><li><i class="ph-bold ph-check check-icon"></i> Letras maiores</li><li><i class="ph-bold ph-check check-icon"></i> Limpeza</li></ul>
+                        <button class="btn btn-primary">Contratar</button>
                     </div>
-
                     <div class="plan-card">
                         <span style="font-size: 40px; color: var(--secondary);">🛡️</span>
                         <h3>Blindagem</h3>
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b; margin: 10px 0;">R$ 85,00</div>
-                        <ul class="features-list">
-                            <li><i class="ph-bold ph-check check-icon"></i> Anti-Golpe Zap</li>
-                            <li><i class="ph-bold ph-check check-icon"></i> Bloqueio Spam</li>
-                        </ul>
-                        <button class="btn btn-secondary" style="width: 100%;">Contratar</button>
+                        <div style="font-size: 24px; font-weight: bold; margin: 10px 0;">R$ 85,00</div>
+                        <ul class="features-list"><li><i class="ph-bold ph-check check-icon"></i> Anti-Golpe Zap</li><li><i class="ph-bold ph-check check-icon"></i> Bloqueio Spam</li></ul>
+                        <button class="btn btn-secondary">Contratar</button>
                     </div>
-
                     <div class="plan-card">
                         <span style="font-size: 40px; color: #f59e0b;">🎓</span>
                         <h3>Aulão</h3>
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b; margin: 10px 0;">R$ 75,00</div>
-                        <ul class="features-list">
-                            <li><i class="ph-bold ph-check check-icon"></i> Aula 1 hora</li>
-                            <li><i class="ph-bold ph-check check-icon"></i> Apostila PDF</li>
-                        </ul>
-                        <button class="btn btn-primary" style="width: 100%; background: #f59e0b;">Agendar</button>
+                        <div style="font-size: 24px; font-weight: bold; margin: 10px 0;">R$ 75,00</div>
+                        <ul class="features-list"><li><i class="ph-bold ph-check check-icon"></i> Aula 1h</li><li><i class="ph-bold ph-check check-icon"></i> Apostila PDF</li></ul>
+                        <button class="btn btn-primary" style="background: #f59e0b;">Agendar</button>
                     </div>
-
                     <div class="plan-card premium">
-                        <div class="popular-tag">POPULAR</div>
                         <span style="font-size: 40px; color: gold;">👑</span>
                         <h3>Premium</h3>
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b; margin: 10px 0;">R$ 125,00<span>/mês</span></div>
-                        <ul class="features-list">
-                            <li><i class="ph-fill ph-star check-icon"></i> Suporte Total</li>
-                            <li><i class="ph-fill ph-star check-icon"></i> Acesso Remoto</li>
-                        </ul>
-                        <button class="btn btn-secondary" style="width: 100%;">Assinar</button>
+                        <div style="font-size: 24px; font-weight: bold; margin: 10px 0;">R$ 125,00<span style="font-size: 14px; font-weight: normal;">/mês</span></div>
+                        <ul class="features-list"><li><i class="ph-fill ph-star check-icon"></i> Suporte Total</li><li><i class="ph-fill ph-star check-icon"></i> Acesso Remoto</li></ul>
+                        <button class="btn btn-secondary">Assinar</button>
                     </div>
-
                 </div>
             </section>
 
@@ -261,60 +210,117 @@
                         <iframe width="100%" height="200" src="https://www.youtube.com/embed/5Peo-ivmupE" frameborder="0" style="border-radius: 10px;"></iframe>
                         <h4 style="margin-top: 15px;">Segurança Digital</h4>
                     </div>
-                    <div class="card-box">
-                        <iframe width="100%" height="200" src="https://www.youtube.com/embed/inpOkctrNsM" frameborder="0" style="border-radius: 10px;"></iframe>
-                        <h4 style="margin-top: 15px;">Aumentar Letras</h4>
-                    </div>
                 </div>
             </section>
 
             <section id="perfil" class="section-content">
                 <div class="card-box" style="text-align: center;">
-                    <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto;">CA</div>
-                    <h2 style="margin-top: 15px;">Cliente Amigo</h2>
-                    <p style="color: #64748b;">cliente@gtech.com</p>
-                    <div style="margin-top: 15px; display: inline-block; background: #dcfce7; color: #166534; padding: 5px 15px; border-radius: 20px; font-size: 13px; font-weight: 700;">Membro Ativo</div>
+                    <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto;">
+                        <span id="profile-initials">G</span>
+                    </div>
+                    <h2 style="margin-top: 15px;" id="profile-name">Visitante</h2>
+                    <p style="color: #64748b;" id="profile-email">Faça login</p>
+                    <div style="margin-top: 15px; display: inline-block; background: #dcfce7; color: #166534; padding: 5px 15px; border-radius: 20px; font-size: 13px; font-weight: 700;">Membro GTech</div>
                 </div>
             </section>
 
-            <a href="https://wa.me/5549985027774" target="_blank" class="whatsapp-float">
+            <a href="https://wa.me/55999999999" target="_blank" class="whatsapp-float">
                 <i class="ph-fill ph-whatsapp-logo" style="font-size: 24px;"></i> Falar no Zap
             </a>
-
         </main>
     </div>
 
     <script>
-        // --- LÓGICA DE LOGIN ---
-        function handleLogin(e) {
+        const DB_KEY = 'gtech_users';
+        const SESSION_KEY = 'gtech_current_user';
+
+        // --- BANCO DE DADOS ---
+        function getUsers() { return JSON.parse(localStorage.getItem(DB_KEY)) || []; }
+        function saveUsers(users) { localStorage.setItem(DB_KEY, JSON.stringify(users)); }
+
+        // --- REGISTRO ---
+        function handleRegister(e) {
             e.preventDefault();
-            // Truque para o layout: Adiciona a classe 'active-flex' que força o Flexbox no PC
-            document.getElementById('access-screen').style.display = 'none';
-            document.getElementById('dashboard').classList.add('active-flex'); 
-            
-            updateGreeting();
+            const form = e.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('input[type="password"]').value;
+
+            if(!name || !email || !password) { alert("Preencha tudo!"); return; }
+
+            const users = getUsers();
+            if(users.find(u => u.email === email)) { alert("E-mail já existe!"); return; }
+
+            users.push({ name, email, password });
+            saveUsers(users);
+            alert("Conta criada! Faça login.");
+            toggleAuth();
         }
 
+        // --- LOGIN ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('input[type="password"]').value;
+
+            const user = getUsers().find(u => u.email === email && u.password === password);
+            
+            if(user) {
+                loginUser(user);
+            } else {
+                alert("Dados incorretos!");
+            }
+        }
+
+        function loginUser(user) {
+            localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+            loadProfileData(user);
+            
+            document.getElementById('access-screen').style.display = 'none';
+            // Lógica PC vs Mobile para exibir o dashboard
+            const dash = document.getElementById('dashboard');
+            if (window.innerWidth > 768) {
+                dash.style.display = 'flex';
+            } else {
+                dash.style.display = 'block';
+            }
+            updateGreeting(user.name);
+        }
+
+        function loadProfileData(user) {
+            document.getElementById('profile-name').innerText = user.name;
+            document.getElementById('profile-email').innerText = user.email;
+            document.getElementById('profile-initials').innerText = user.name.charAt(0).toUpperCase();
+        }
+
+        // --- PERSISTÊNCIA (Ao recarregar página) ---
+        window.onload = function() {
+            const currentUser = JSON.parse(localStorage.getItem(SESSION_KEY));
+            if(currentUser) loginUser(currentUser);
+        };
+
+        function logout() {
+            if(confirm("Sair?")) {
+                localStorage.removeItem(SESSION_KEY);
+                location.reload();
+            }
+        }
+
+        // --- NAVEGAÇÃO E UI ---
         function toggleAuth() {
             document.getElementById('login-container').classList.toggle('active');
             document.getElementById('register-container').classList.toggle('active');
         }
 
-        // --- NAVEGAÇÃO ---
-        function navigate(targetId) {
-            // Fecha menu no celular
+        function navigate(id) {
             if(window.innerWidth <= 768) toggleMenu();
-
-            // Reseta abas
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-            
-            // Ativa aba
-            document.querySelector(`button[onclick="navigate('${targetId}')"]`).classList.add('active');
-            document.getElementById(targetId).classList.add('active');
+            document.querySelector(`button[onclick="navigate('${id}')"]`).classList.add('active');
+            document.getElementById(id).classList.add('active');
         }
 
-        // --- MENU MOBILE ---
         function toggleMenu() {
             const sb = document.getElementById('sidebar');
             const ov = document.getElementById('overlay');
@@ -322,10 +328,11 @@
             ov.style.display = sb.classList.contains('mobile-active') ? 'block' : 'none';
         }
 
-        function updateGreeting() {
+        function updateGreeting(name) {
             const h = new Date().getHours();
-            const txt = h < 12 ? 'Bom dia!' : (h < 18 ? 'Boa tarde!' : 'Boa noite!');
-            document.getElementById('greeting').innerText = txt;
+            const txt = h < 12 ? 'Bom dia' : (h < 18 ? 'Boa tarde' : 'Boa noite');
+            const firstName = name ? name.split(' ')[0] : 'Visitante';
+            document.getElementById('greeting').innerText = `${txt}, ${firstName}!`;
         }
     </script>
 </body>
