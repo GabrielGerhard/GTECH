@@ -8,15 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS V3.0 - CORES MAIS QUENTES E AMIGÁVEIS --- */
+        /* --- CSS V3.0 (CORRIGIDO) --- */
         :root {
-            /* Azul mais vibrante e amigável, menos corporativo frio */
             --primary: #2563eb; 
             --primary-dark: #1d4ed8;
-            /* Verde mais natural e quente, tipo esmeralda/natureza */
             --secondary: #10b981; 
-            
-            --bg-body: #f8fafc; /* Fundo ligeiramente mais quente que o cinza anterior */
+            --bg-body: #f8fafc;
             --surface: #ffffff;
             --text-main: #1e293b;
             --text-muted: #64748b;
@@ -45,15 +42,16 @@
 
         .text-gradient {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; 
+            background-clip: text; /* Correção do aviso de compatibilidade */
+            -webkit-text-fill-color: transparent;
         }
         .toggle-link { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
         .toggle-link:hover { text-decoration: underline; }
 
-        /* TELA DE ACESSO (LOGIN/REGISTRO) - Fundo mais quente */
+        /* TELA DE ACESSO (LOGIN/REGISTRO) */
         #access-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* Degradê mais suave e quente: azul claro para verde claro */
             background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
             display: flex; justify-content: center; align-items: center; z-index: 1000;
             padding: 20px;
@@ -71,7 +69,6 @@
         }
         .access-card input:focus { border-color: var(--primary); background: white; }
 
-        /* Container que alterna entre login e registro */
         .form-container { display: none; animation: fadeIn 0.3s ease; }
         .form-container.active { display: block; }
 
@@ -85,7 +82,7 @@
         /* DASHBOARD LAYOUT */
         #dashboard { display: none; height: 100vh; }
 
-        /* SIDEBAR - Mais limpa */
+        /* SIDEBAR */
         aside {
             width: var(--sidebar-width); background: var(--surface);
             display: flex; flex-direction: column; padding: 30px 20px;
@@ -114,7 +111,7 @@
             box-shadow: var(--shadow-sm); border: 1px solid #f1f5f9;
         }
 
-        /* GRID DE PLANOS - Com novas cores */
+        /* GRID DE PLANOS */
         .plans-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 25px; margin-top: 20px;
@@ -126,7 +123,6 @@
         }
         .plan-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary); }
         
-        /* Destaque Premium mais quente */
         .plan-card.premium { 
             border: 2px solid var(--secondary); 
             background: linear-gradient(to bottom, #ecfdf5, white); 
@@ -272,7 +268,7 @@
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <div>
                             <h2 style="font-size: 24px; margin-bottom: 10px;">Precisa de ajuda agora?</h2>
-                            <p style="opacity: 0.95; font-size: 15px; max-width: 500px;">Nosso time está pronto para acessar seu celular remotamente e resolver qualquer problema com paciência.</p>
+                            <p style="opacity: 0.95; font-size: 15px; max-width: 500px;">Nosso time está pronto para acessar seu celular remotamente e resolver qualquer problema.</p>
                         </div>
                         <i class="ph-fill ph-headset" style="font-size: 64px; opacity: 0.5;"></i>
                     </div>
@@ -282,7 +278,7 @@
                 <div style="margin-top: 40px;">
                     <h3 style="font-size: 20px; margin-bottom: 20px;">Atalhos Rápidos</h3>
                     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                        <div class="card-box" style="flex: 1; min-width: 220px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.borderColor=var(--primary)" onmouseout="this.style.borderColor='#f1f5f9'">
+                        <div class="card-box" style="flex: 1; min-width: 220px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid #f1f5f9;" onmouseover="this.style.borderColor=var(--primary)" onmouseout="this.style.borderColor='#f1f5f9'">
                             <div style="background: #dcfce7; padding: 12px; border-radius: 12px;">
                                 <i class="ph-fill ph-whatsapp-logo" style="font-size: 28px; color: var(--secondary);"></i>
                             </div>
@@ -291,7 +287,7 @@
                                 <p style="font-size: 13px; color: var(--text-muted);">Como identificar?</p>
                             </div>
                         </div>
-                        <div class="card-box" style="flex: 1; min-width: 220px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.borderColor=var(--primary)" onmouseout="this.style.borderColor='#f1f5f9'">
+                        <div class="card-box" style="flex: 1; min-width: 220px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid #f1f5f9;" onmouseover="this.style.borderColor=var(--primary)" onmouseout="this.style.borderColor='#f1f5f9'">
                             <div style="background: #dbeafe; padding: 12px; border-radius: 12px;">
                                 <i class="ph-fill ph-bank" style="font-size: 28px; color: var(--primary);"></i>
                             </div>
@@ -363,15 +359,15 @@
                         <iframe width="100%" height="220" src="https://www.youtube.com/embed/5Peo-ivmupE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         <div style="padding: 20px; background: white;">
                             <h4 style="font-size: 18px;">Dicas de Segurança Digital</h4>
-                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;">Aprenda o básico para identificar mensagens suspeitas e não cair em ciladas na internet.</p>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">Aprenda a não cair em ciladas.</p>
                             <button class="btn" style="margin-top: 15px; background: #f1f5f9; color: var(--text-main); font-size: 13px; padding: 8px 16px;">Assistir Aula</button>
                         </div>
                     </div>
                     <div class="video-frame">
                         <iframe width="100%" height="220" src="https://www.youtube.com/embed/inpOkctrNsM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         <div style="padding: 20px; background: white;">
-                            <h4 style="font-size: 18px;">Como aumentar a letra do Celular</h4>
-                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;">Tutorial rápido e fácil para deixar a tela do seu Android muito mais fácil de ler.</p>
+                            <h4 style="font-size: 18px;">Letras Grandes no Celular</h4>
+                            <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">Tutorial rápido para Android.</p>
                             <button class="btn" style="margin-top: 15px; background: #f1f5f9; color: var(--text-main); font-size: 13px; padding: 8px 16px;">Assistir Aula</button>
                         </div>
                     </div>
@@ -380,17 +376,15 @@
 
             <section id="perfil" class="section-content">
                 <div class="card-box" style="display: flex; align-items: center; gap: 25px;">
-                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: 700; box-shadow: var(--shadow-md);">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: 700;">
                         CA
                     </div>
                     <div>
                         <h2 style="font-size: 24px;">Cliente Amigo</h2>
                         <p style="color: var(--text-muted); font-size: 16px; margin-top: 5px;">cliente@gtech.com</p>
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                            <span style="display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; color: #166534; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;">
-                                <i class="ph-fill ph-check-circle"></i> Membro Ativo
-                            </span>
-                        </div>
+                        <span style="display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; color: #166534; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-top: 10px;">
+                            <i class="ph-fill ph-check-circle"></i> Membro Ativo
+                        </span>
                     </div>
                 </div>
             </section>
@@ -404,79 +398,114 @@
     </div>
 
     <script>
-        // --- LÓGICA DE ALTERNAR ENTRE LOGIN E REGISTRO ---
-        const loginContainer = document.getElementById('login-container');
-        const registerContainer = document.getElementById('register-container');
-        const showRegisterBtn = document.getElementById('show-register');
-        const showLoginBtn = document.getElementById('show-login');
-
-        showRegisterBtn.addEventListener('click', () => {
-            loginContainer.classList.remove('active');
-            registerContainer.classList.add('active');
-        });
-
-        showLoginBtn.addEventListener('click', () => {
-            registerContainer.classList.remove('active');
-            loginContainer.classList.add('active');
-        });
-
-        // --- FUNÇÃO GENÉRICA DE SUBMIT (Simula carregamento) ---
-        function handleFormSubmit(event, formId) {
-            event.preventDefault();
-            const form = document.getElementById(formId);
-            const btn = form.querySelector('button');
-            const btnText = btn.querySelector('.btn-text');
-            const spinner = btn.querySelector('.spinner');
+        document.addEventListener('DOMContentLoaded', () => {
             
-            // Trava o botão e mostra spinner
-            btn.disabled = true;
-            btnText.style.display = 'none';
-            spinner.style.display = 'block';
+            // --- VARIÁVEIS ---
+            const loginContainer = document.getElementById('login-container');
+            const registerContainer = document.getElementById('register-container');
+            const showRegisterBtn = document.getElementById('show-register');
+            const showLoginBtn = document.getElementById('show-login');
+            
+            // --- 1. ALTERNAR LOGIN/REGISTRO ---
+            if (showRegisterBtn && showLoginBtn) {
+                showRegisterBtn.addEventListener('click', () => {
+                    loginContainer.classList.remove('active');
+                    registerContainer.classList.add('active');
+                });
 
-            // Simula espera de 2 segundos
-            setTimeout(() => {
-                document.getElementById('access-screen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'flex';
-                updateGreeting();
+                showLoginBtn.addEventListener('click', () => {
+                    registerContainer.classList.remove('active');
+                    loginContainer.classList.add('active');
+                });
+            }
+
+            // --- 2. FUNÇÃO DE SUBMIT GENÉRICA ---
+            function handleFormSubmit(event, formId) {
+                event.preventDefault(); // Impede o recarregamento
+                const form = document.getElementById(formId);
                 
-                // Reseta o botão (para quando fizer logout)
-                btn.disabled = false;
-                btnText.style.display = 'block';
-                spinner.style.display = 'none';
-            }, 2000);
-        }
+                // Proteção extra caso o form não exista
+                if(!form) return;
 
-        // Listeners para os formulários
-        document.getElementById('login-form').addEventListener('submit', (e) => handleFormSubmit(e, 'login-form'));
-        document.getElementById('register-form').addEventListener('submit', (e) => handleFormSubmit(e, 'register-form'));
+                const btn = form.querySelector('button');
+                const btnText = btn.querySelector('.btn-text');
+                const spinner = btn.querySelector('.spinner');
+                
+                // Ativar Loading
+                if(btn && btnText && spinner) {
+                    btn.disabled = true;
+                    btnText.style.display = 'none';
+                    spinner.style.display = 'block';
+                }
 
+                // Simular delay de 2 segundos
+                setTimeout(() => {
+                    const accessScreen = document.getElementById('access-screen');
+                    const dashboard = document.getElementById('dashboard');
+                    
+                    if(accessScreen && dashboard) {
+                        accessScreen.style.display = 'none';
+                        dashboard.style.display = 'flex';
+                        updateGreeting();
+                    }
+                    
+                    // Resetar o botão
+                    if(btn && btnText && spinner) {
+                        btn.disabled = false;
+                        btnText.style.display = 'block';
+                        spinner.style.display = 'none';
+                    }
+                }, 2000);
+            }
 
-        // --- SAUDAÇÃO ---
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            const greetingElement = document.getElementById('greeting-text');
-            let greeting = 'Bem-vindo!';
-            if (hour >= 5 && hour < 12) greeting = 'Bom dia! ☀️';
-            else if (hour >= 12 && hour < 18) greeting = 'Boa tarde! 🌤️';
-            else greeting = 'Boa noite! 🌙';
-            greetingElement.innerText = greeting;
-        }
+            // --- 3. ATIVAR LISTENERS DOS FORMULÁRIOS ---
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
 
-        // --- NAVEGAÇÃO DE ABAS ---
-        const navButtons = document.querySelectorAll('.nav-btn[data-target]');
-        const sections = document.querySelectorAll('.section-content');
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => handleFormSubmit(e, 'login-form'));
+            }
 
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                navButtons.forEach(b => b.classList.remove('active'));
-                sections.forEach(s => s.classList.remove('active'));
-                btn.classList.add('active');
-                const target = btn.getAttribute('data-target');
-                document.getElementById(target).classList.add('active');
+            if (registerForm) {
+                registerForm.addEventListener('submit', (e) => handleFormSubmit(e, 'register-form'));
+            }
+
+            // --- 4. SAUDAÇÃO ---
+            function updateGreeting() {
+                const hour = new Date().getHours();
+                const greetingElement = document.getElementById('greeting-text');
+                if (greetingElement) {
+                    let greeting = 'Bem-vindo!';
+                    if (hour >= 5 && hour < 12) greeting = 'Bom dia! ☀️';
+                    else if (hour >= 12 && hour < 18) greeting = 'Boa tarde! 🌤️';
+                    else greeting = 'Boa noite! 🌙';
+                    greetingElement.innerText = greeting;
+                }
+            }
+
+            // --- 5. NAVEGAÇÃO DE ABAS ---
+            const navButtons = document.querySelectorAll('.nav-btn[data-target]');
+            const sections = document.querySelectorAll('.section-content');
+
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active de todos
+                    navButtons.forEach(b => b.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+                    
+                    // Adiciona active no clicado
+                    btn.classList.add('active');
+                    const targetId = btn.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if(targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                });
             });
         });
 
-        // --- LOGOUT ---
+        // --- 6. LOGOUT (Fora do DOMContentLoaded para poder ser chamado no onclick do HTML) ---
         function logout() {
             if(confirm('Tem certeza que deseja sair?')) {
                 location.reload();
