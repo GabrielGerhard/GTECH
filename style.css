@@ -1,0 +1,808 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS GLOBAIS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg-color: #0d0d12;
+    --text-color: #ffffff;
+    --neon-blue: #00f3ff;
+    --neon-purple: #bd00ff;
+    --card-bg: #1a1a24;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. HEADER E NAVEGAÇÃO
+   ========================================================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: rgba(13, 13, 18, 0.9);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px); /* Dá um efeito de vidro fosco bem premium */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.logo-icon {
+    color: var(--neon-blue);
+    font-size: 28px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    color: var(--neon-purple);
+}
+
+.active {
+    border-bottom: 2px solid var(--neon-blue);
+    padding-bottom: 5px;
+}
+
+/* Botão Login / Premium */
+.login-btn {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #333;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.login-btn:hover {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 10px rgba(189, 0, 255, 0.3);
+}
+
+/* ==========================================================================
+   3. BOTÕES NEON GLOBAIS
+   ========================================================================== */
+.btn {
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: inline-block;
+    margin: 10px;
+    font-size: 1.1rem;
+}
+
+.btn-hardware {
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    background: transparent;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.btn-hardware:hover {
+    background-color: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+}
+
+.btn-software {
+    border: 2px solid var(--neon-purple);
+    color: var(--neon-purple);
+    background: transparent;
+    box-shadow: 0 0 10px rgba(189, 0, 255, 0.2);
+}
+
+.btn-software:hover {
+    background-color: var(--neon-purple);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(189, 0, 255, 0.6);
+}
+
+/* ==========================================================================
+   4. PÁGINA PRINCIPAL (INDEX)
+   ========================================================================== */
+.hero-split {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 120px 20px 50px;
+    background: radial-gradient(circle at center, #1a1a24 0%, #0d0d12 100%);
+}
+
+.hero-text {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: #aaaaaa;
+}
+
+.cards-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.main-card {
+    flex: 1;
+    min-width: 320px;
+    background: rgba(20, 20, 30, 0.6);
+    border-radius: 15px;
+    padding: 40px 30px;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-card:hover {
+    transform: translateY(-10px);
+}
+
+.card-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-card h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.main-card ul {
+    list-style: none;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.main-card ul li {
+    margin-bottom: 10px;
+    color: #ddd;
+    font-size: 0.95rem;
+}
+
+.card-footer {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: auto;
+}
+
+/* Efeitos Neon dos Cards Principais */
+.card-hardware { border: 1px solid rgba(0, 243, 255, 0.3); }
+.card-hardware:hover { box-shadow: 0 0 30px rgba(0, 243, 255, 0.15); border-color: var(--neon-blue); }
+.card-hardware .card-icon, .card-hardware .card-footer { color: var(--neon-blue); }
+
+.card-software { border: 1px solid rgba(189, 0, 255, 0.3); }
+.card-software:hover { box-shadow: 0 0 30px rgba(189, 0, 255, 0.15); border-color: var(--neon-purple); }
+.card-software .card-icon, .card-software .card-footer { color: var(--neon-purple); }
+
+/* ==========================================================================
+   5. LAYOUT DAS SUBPÁGINAS (HARDWARE / SOFTWARE)
+   ========================================================================== */
+.page-content {
+    min-height: 100vh;
+    padding: 120px 20px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.neon-blue-text { color: var(--neon-blue); }
+.neon-purple-text { color: var(--neon-purple); }
+
+.action-area {
+    margin-top: 50px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   6. CARDS INTERATIVOS (EXPANSÍVEIS)
+   ========================================================================== */
+.service-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.service-card-interactive {
+    background: rgba(20, 20, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda neutra inicial */
+    border-radius: 10px;
+    width: 300px;
+    padding: 25px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.service-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 15px 0 10px 0;
+    display: block;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.4s ease;
+}
+
+/* Detalhes Escondidos */
+.service-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    color: #bbb;
+    font-size: 0.95rem;
+    text-align: left;
+    margin-top: 0;
+    border-top: 1px solid transparent;
+    padding-top: 0;
+}
+
+/* Específicos para a Página de HARDWARE (Azul) */
+.hardware-bg .service-card-interactive { border-color: rgba(0, 243, 255, 0.2); }
+.hardware-bg .service-card-interactive:hover { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); transform: translateY(-5px); }
+.hardware-bg .service-card-interactive h3, .hardware-bg .toggle-icon { color: var(--neon-blue); }
+
+.hardware-bg .service-card-interactive.active {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+    background: rgba(20, 20, 30, 0.9);
+}
+.hardware-bg .service-card-interactive.active .toggle-icon { transform: rotate(180deg); }
+.hardware-bg .service-card-interactive.active .service-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 15px;
+    border-top: 1px solid rgba(0, 243, 255, 0.3);
+    padding-top: 15px;
+}
+
+/* Específicos para a Página de SOFTWARE (Roxo) */
+.software-bg .service-card-interactive { border-color: rgba(189, 0, 255, 0.2); }
+.software-bg .service-card-interactive:hover { border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(189, 0, 255, 0.3); transform: translateY(-5px); }
+.software-bg .service-card-interactive h3, .software-bg .toggle-icon { color: var(--neon-purple); }
+
+.software-bg .service-card-interactive.active {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 25px rgba(189, 0, 255, 0.5);
+    background: rgba(20, 20, 30, 0.9);
+}
+.software-bg .service-card-interactive.active .toggle-icon { transform: rotate(180deg); }
+.software-bg .service-card-interactive.active .service-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 15px;
+    border-top: 1px solid rgba(189, 0, 255, 0.3);
+    padding-top: 15px;
+}
+/* Estilos do Portfólio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 80px;
+}
+
+.portfolio-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.portfolio-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.portfolio-info {
+    padding: 20px;
+}
+
+.tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.tag-hardware { background: var(--neon-blue); color: #000; }
+.tag-software { background: var(--neon-purple); color: #fff; }
+
+/* Estilos de Login */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+.login-card {
+    background: #1a1a24;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--neon-purple);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #0d0d12;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.premium-info {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #444;
+    text-align: left;
+}
+
+.premium-info h3 { color: var(--neon-blue); font-size: 1rem; margin-bottom: 10px; }
+.premium-info ul { list-style: none; font-size: 0.85rem; color: #bbb; }
+/* ==========================================================================
+   ESTILOS DA PÁGINA SOBRE
+   ========================================================================== */
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.about-text {
+    max-width: 900px;
+    text-align: center;
+    background: rgba(20, 20, 30, 0.6);
+    padding: 50px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.about-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+    -webkit-background-clip: text;
+    background-clip: text; /* <-- ESTA É A LINHA QUE O VS CODE PEDIU */
+    -webkit-text-fill-color: transparent;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Grid de Valores (Transparência, Agilidade, etc) */
+.values-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.value-item {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    border-bottom: 3px solid var(--neon-blue);
+    flex: 1;
+    min-width: 250px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.value-item:hover {
+    transform: translateY(-5px);
+    border-bottom-color: var(--neon-purple);
+}
+
+.value-item i {
+    font-size: 2.5rem;
+    color: var(--neon-blue);
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.value-item:hover i {
+    color: var(--neon-purple);
+}
+
+.value-item h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.value-item p {
+    font-size: 0.95rem;
+    color: #aaaaaa;
+    margin-bottom: 0;
+}
+/* Atualização da Página de Login (Split) */
+.login-split-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1000px;
+    width: 100%;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.free-tier { border: 1px solid rgba(0, 243, 255, 0.3); }
+.premium-tier { border: 1px solid rgba(189, 0, 255, 0.3); background: rgba(20, 20, 30, 0.8); }
+.premium-benefits { list-style: none; text-align: left; margin: 20px 0; color: #ddd; font-size: 0.95rem; }
+.premium-benefits li { margin-bottom: 10px; }
+.premium-benefits i { color: var(--neon-purple); margin-right: 10px; }
+
+/* ==========================================================================
+   7. ÁREA DO CLIENTE VIP (DASHBOARD)
+   ========================================================================== */
+.dashboard-grid {
+    display: grid;
+    /* Isso faz os cards se ajustarem sozinhos no celular ou no PC */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 20px;
+}
+
+.dashboard-card {
+    background: rgba(20, 20, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    background: rgba(25, 25, 35, 0.9);
+}
+
+.dashboard-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 15px;
+}
+
+.dashboard-card .card-header i {
+    font-size: 1.8rem;
+}
+
+.dashboard-card .card-header h3 {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.dashboard-card .card-body {
+    flex-grow: 1;
+    color: #ccc;
+    line-height: 1.6;
+}
+.modal-gtech {
+    display: none; 
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: #111;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #bc32ad;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(188, 50, 173, 0.3);
+}
+
+.close-btn {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+    color: #555;
+}
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; color: #eee; }
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+}
+
+.upload-area {
+    border: 2px dashed #333;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+/* ==========================================
+   GTech: Correção Profissional do Portfólio
+========================================== */
+
+/* 1. Garante que o grid de projetos seja flexível e organizado */
+#portfolio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* 2. Estilo do Card Completo (igual ao da dashboard) */
+.portfolio-card {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px; /* Largura padrão para desktop */
+    overflow: hidden; /* Corta o que sobrar das bordas arredondadas */
+    transition: all 0.3s ease;
+    display: flex; /* Organiza os elementos internos */
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.portfolio-card:hover {
+    border-color: #00d2ff;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+/* 3. Correção Crucial da Imagem: Altura definida e sem achatar! */
+.portfolio-img {
+    height: 220px; /* Altura fixa para manter o padrão na tela */
+    width: 100%;
+    display: block;
+    /* As regras abaixo garantem que a foto cubra o espaço sem deformar */
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #333;
+}
+
+/* 4. Estilo do Conteúdo do Card (Texto) */
+.portfolio-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1; /* Garante que o texto preencha o card */
+}
+
+/* 5. Correção do Título (Para não cortar ou quebrar) */
+.portfolio-info h3 {
+    font-size: 1.25rem;
+    color: white;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 600;
+    /* Garante que o texto longo do título quebre a linha corretamente */
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+/* Tag de Serviço (ex: Hardware) */
+.portfolio-info .tag-hardware {
+    background: #bc32ad; /* Neon-purple */
+    color: white;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+    font-weight: bold;
+}
+
+/* Descrição */
+.portfolio-info p {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 6. Botão de Excluir do Admin (Arrumado) */
+.admin-delete-container {
+    margin-top: auto; /* Cola o botão no fundo do card */
+    border-top: 1px solid #333;
+    padding-top: 15px;
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+}
+
+/* Substitui as regras in-line antigas do botão */
+.portfolio-info button {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.3s;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.portfolio-info button:hover {
+    background: #ff4d4d;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+}
+/* ==========================================
+   FOOTER (RODAPÉ) DA GTECH
+========================================== */
+.gtech-footer {
+    background-color: #0a0a0a;
+    border-top: 1px solid #222;
+    padding: 50px 20px 20px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-logo h2 {
+    color: white;
+    margin: 0 0 5px 0;
+    font-size: 1.8rem;
+}
+
+.footer-logo p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* O Botão Mágico do Instagram */
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-btn.instagram {
+    /* Degradê original do Instagram */
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+}
+
+.social-btn.instagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(220, 39, 67, 0.5);
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid #1a1a1a;
+    padding-top: 20px;
+    color: #444;
+    font-size: 0.8rem;
+}
+
+/* Deixa lado a lado no PC e empilhado no celular */
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-around;
+        text-align: left;
+    }
+}

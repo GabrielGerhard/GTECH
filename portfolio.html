@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio | GTech</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="/" style="text-decoration: none;" class="logo"><span class="logo-icon">G</span>Tech</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+                <li><a href="software.html">Software</a></li>
+                <li><a href="portfolio.html" class="active">Portfólio</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href="login.html" class="login-btn"><i class="fas fa-user-circle"></i> Entrar / Premium</a>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="page-header">
+            <h1><i class="fas fa-project-diagram neon-blue-text"></i> Projetos Concluídos</h1>
+            <p>Conheça alguns dos desafios que a GTech já solucionou.</p>
+        </div>
+
+        <div id="admin-panel" style="display: none; width: 100%; max-width: 1100px; text-align: right; margin-bottom: 20px;">
+            <button id="btn-add-project" class="btn btn-software"><i class="fas fa-plus"></i> Novo Projeto</button>
+        </div>
+
+        <div id="portfolio-grid" class="portfolio-grid">
+            </div>
+
+        <section class="feedback-display" style="margin-top: 60px; text-align: center; width: 100%;">
+            <h2 style="margin-bottom: 30px;"><i class="fas fa-star neon-blue-text"></i> O que dizem os nossos clientes</h2>
+            
+            <div id="feedback-container" class="feedback-list">
+                </div>
+        </section>
+    </main>
+
+    <div id="modal-projeto" class="modal-gtech">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fas fa-tools neon-purple-text"></i> Novo Trabalho GTech</h2>
+            
+            <form id="form-novo-projeto">
+                <div class="form-group">
+                    <label>Título do Projeto:</label>
+                    <input type="text" id="proj-titulo" placeholder="Ex: PC Gamer do Cliente X" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Serviço:</label>
+                    <select id="proj-servico">
+                        <option value="smartphones">Manutenção de Smartphones</option>
+                        <option value="hardware">Manutenção de Hardware</option>
+                        <option value="software">Otimização de Software</option>
+                        <option value="formatacao">Formatação Premium</option>
+                        <option value="limpeza">Limpeza Física e Térmica</option>
+                        <option value="virus">Remoção de Vírus/Malware</option>
+                        <option value="sistema">Desenvolvimento de Sistema</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição do Reparo:</label>
+                    <textarea id="proj-descricao" placeholder="Descreva brevemente o que foi feito..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Foto do Equipamento:</label>
+                    <div class="upload-area">
+                        <input type="file" id="proj-imagem" accept="image/*">
+                        <p><i class="fas fa-cloud-upload-alt"></i> Clique para selecionar imagem</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Avaliação do Cliente:</label>
+                    <select id="proj-estrelas">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                        <option value="3">⭐⭐⭐ (3/5)</option>
+                        <option value="2">⭐⭐ (2/5)</option>
+                        <option value="1">⭐ (1/5)</option>
+                        <option value="0">Sem avaliação</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Comentário do Cliente:</label>
+                    <textarea id="proj-comentario" placeholder='Ex: "Ficou zero bala! Recomendo muito!"' rows="2"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-software" style="width: 100%;">Publicar no Portfólio</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

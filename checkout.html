@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTech Premium | Pagamento</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="background: #050505;">
+
+    <header>
+        <a href="index.html" style="text-decoration: none;" class="logo"><span class="logo-icon">G</span>Tech</a>
+    </header>
+
+    <main class="page-content" style="padding-top: 100px; display: flex; justify-content: center; align-items: center; min-height: 90vh;">
+        
+        <div class="checkout-container" style="background: #111; border: 1px solid #222; border-radius: 15px; width: 100%; max-width: 450px; padding: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            
+            <i class="fas fa-gem neon-purple-text" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <h1 style="color: white; margin-bottom: 5px;">Assinar GTech Premium</h1>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 25px;">Libere suporte prioritário e 15% de desconto vitalício.</p>
+
+            <div style="background: rgba(188, 50, 173, 0.1); border: 1px solid rgba(188, 50, 173, 0.3); padding: 15px; border-radius: 10px; margin-bottom: 25px;">
+                <span style="color: #ccc; font-size: 0.8rem; text-transform: uppercase;">Valor da Assinatura</span>
+                <h2 style="color: #bc32ad; font-size: 2.2rem; margin: 5px 0;">R$ 49,90</h2>
+                <span style="color: #666; font-size: 0.75rem;">Pagamento Único / Sem mensalidade</span>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 20px; box-shadow: 0 0 15px rgba(255,255,255,0.1);">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=c3a30f33-86d5-41b5-be95-4b6e305f7305" alt="QR Code PIX GTech" style="display: block;">
+            </div>
+
+            <div style="margin-bottom: 25px; text-align: left;">
+                <label style="color: #aaa; font-size: 0.8rem; margin-bottom: 8px; display: block;">Chave PIX (Celular):</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" value="c3a30f33-86d5-41b5-be95-4b6e305f7305" id="pixKey" readonly style="flex: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 8px; font-family: monospace; outline: none;">
+                    <button onclick="copyPix()" style="background: #bc32ad; color: white; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; transition: 0.3s;" title="Copiar">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #222; padding-top: 25px; margin-top: 10px;">
+                <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px;">Após o pagamento, envie o comprovante para liberação imediata:</p>
+                <a href="https://wa.me/5549985027774?text=Ol%C3%A1%21%20Acabei%20de%20fazer%20o%20PIX%20da%20assinatura%20GTech%20Premium.%20Aqui%20est%C3%A1%20o%20comprovante%3A" 
+                   target="_blank" 
+                   class="btn btn-software" 
+                   style="width: 100%; display: block; box-sizing: border-box; text-decoration: none; font-weight: bold; font-size: 1rem;">
+                   <i class="fab fa-whatsapp"></i> Enviar Comprovante
+                </a>
+            </div>
+
+            <a href="painel-cliente.html" style="display: block; margin-top: 20px; color: #444; font-size: 0.8rem; text-decoration: none;">Voltar ao painel</a>
+
+        </div>
+    </main>
+
+    <script>
+        function copyPix() {
+            const pixInput = document.getElementById("pixKey");
+            pixInput.select();
+            pixInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+            navigator.clipboard.writeText(pixInput.value);
+            
+            const btn = document.querySelector('button[onclick="copyPix()"]');
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.background = "#32BCAD";
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy"></i>';
+                btn.style.background = "#bc32ad";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Cliente | GTech</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="/" style="text-decoration: none;" class="logo"><span class="logo-icon">G</span>Tech</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+                <li><a href="software.html">Software</a></li>
+                <li><a href="portfolio.html">Portfólio</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-page">
+        <div class="login-split-container">
+            
+            <div class="login-card free-tier">
+                <h2>Acesso à Conta</h2>
+                <p>Entre para acompanhar seus serviços ou deixar seu feedback no site.</p>
+                
+                <form id="login-form">
+                    <input type="email" placeholder="E-mail" required>
+                    <input type="password" placeholder="Palavra-passe" required>
+                    <button type="submit" class="btn btn-hardware" style="width: 100%;">Entrar</button>
+                </form>
+
+                <div style="margin-top: 20px; font-size: 0.9rem;">
+                    <span style="color: #bbb;">Ainda não é cliente?</span> 
+                    <a href="cadastro.html" style="color: var(--neon-blue); text-decoration: none; font-weight: bold;">Crie sua conta grátis</a>
+                </div>
+            </div>
+
+            <div class="login-card premium-tier">
+                <h2>GTech <span class="neon-purple-text">Premium</span> 💎</h2>
+                <p>Seja um cliente VIP e garanta segurança total para seus equipamentos durante o ano todo.</p>
+                
+                <ul class="premium-benefits">
+                    <li><i class="fas fa-check"></i> 15% de Desconto em Mão de Obra</li>
+                    <li><i class="fas fa-check"></i> Participação nos Sorteios Mensais</li>
+                    <li><i class="fas fa-check"></i> Prioridade Máxima em Atendimento de Urgência</li>
+                </ul>
+
+                <a href="checkout.html" class="btn btn-software" style="width: 100%; display: block; box-sizing: border-box;">Assinar Premium</a>
+            </div>
+
+        </div>
+    </main>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

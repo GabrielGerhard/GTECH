@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta | GTech</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="/" style="text-decoration: none;" class="logo"><span class="logo-icon">G</span>Tech</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+                <li><a href="software.html">Software</a></li>
+                <li><a href="portfolio.html">Portfólio</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-page">
+        <div class="login-card" style="border-color: var(--neon-blue);">
+            <h2>Criar Conta <span class="neon-blue-text">GTech</span></h2>
+            <p>Faça seu cadastro para avaliar nossos serviços e participar da comunidade.</p>
+            
+            <form id="register-form" style="margin-top: 20px;">
+                <input type="text" id="reg-nome" placeholder="Seu Nome Completo" required>
+                <input type="email" id="reg-email" placeholder="Seu melhor E-mail" required>
+                <input type="password" id="reg-senha" placeholder="Crie uma Palavra-passe" required>
+                <input type="password" id="reg-confirma-senha" placeholder="Confirme a Palavra-passe" required>
+                
+                <button type="submit" class="btn btn-hardware" style="width: 100%; margin: 20px 0 10px 0;">Cadastrar Agora</button>
+            </form>
+            
+            <div style="margin-top: 15px; font-size: 0.9rem;">
+                <span style="color: #bbb;">Já tem uma conta?</span> 
+                <a href="login.html" style="color: var(--neon-blue); text-decoration: none; font-weight: bold;">Faça Login aqui</a>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

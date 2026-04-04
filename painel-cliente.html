@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel VIP | GTech</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="/" style="text-decoration: none;" class="logo"><span class="logo-icon">G</span>Tech</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hardware.html">Hardware</a></li>
+                <li><a href="software.html">Software</a></li>
+                <li><a href="portfolio.html">Portfólio</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href="index.html" class="btn btn-hardware" style="padding: 8px 15px; font-size: 0.85rem;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </div>
+    </header>
+
+    <main class="page-content" style="padding-top: 120px;">
+        <div class="page-header">
+            <h1>Olá, Cliente VIP! <i class="fas fa-gem neon-purple-text"></i></h1>
+            <p>Bem-vindo à sua área exclusiva. Seu plano Premium está <strong style="color: #32BCAD;">Ativo</strong>.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <i class="fas fa-laptop-medical neon-blue-text"></i>
+                    <h3>Status do Equipamento</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Aparelho:</strong> Nenhum na bancada</p>
+                    <div style="margin-top: 15px;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 5px; font-size: 0.85rem; color: #aaa;">Tudo em ordem no momento</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card" style="border-color: rgba(189, 0, 255, 0.4); box-shadow: 0 0 15px rgba(189, 0, 255, 0.1);">
+                <div class="card-header">
+                    <i class="fas fa-bolt neon-purple-text"></i>
+                    <h3>Suporte Urgente</h3>
+                </div>
+                <div class="card-body">
+                    <p style="font-size: 0.9rem; margin-bottom: 20px;">Precisa de ajuda rápida? Seu chamado fura a fila de atendimento convencional.</p>
+                    <a href="https://wa.me/5549985027774?text=ATENDIMENTO%20VIP%20GTECH%3A%20Preciso%20de%20suporte%20urgente%20agora!" target="_blank" class="btn btn-software" style="width: 100%; display: block; box-sizing: border-box; text-align: center; padding: 10px;">Acionar Plantão</a>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <i class="fas fa-ticket-alt" style="color: #32BCAD;"></i>
+                    <h3>Benefícios Ativos</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p style="font-size: 0.9rem; text-align: left;">Apresente este código para ganhar 15% OFF em serviços físicos:</p>
+                    <div style="background: rgba(0,0,0,0.5); padding: 15px; margin-top: 15px; border: 1px dashed #32BCAD; font-family: monospace; font-size: 1.3rem; letter-spacing: 2px; color: #fff;">
+                        GTECHVIP15
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card" style="grid-column: 1 / -1;">
+                <div class="card-header">
+                    <i class="fas fa-star neon-blue-text"></i>
+                    <h3>Avalie a GTech</h3>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 15px;">Como foi sua experiência com o nosso serviço?</p>
+                    <form id="form-feedback-cliente">
+                        <div class="form-group">
+                            <select id="cliente-estrelas" style="width: 100%; padding: 10px; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 8px; margin-bottom: 15px;" required>
+                                <option value="" disabled selected>Escolha uma nota...</option>
+                                <option value="5">⭐⭐⭐⭐⭐ Excelente!</option>
+                                <option value="4">⭐⭐⭐⭐ Muito Bom</option>
+                                <option value="3">⭐⭐⭐ Bom</option>
+                                <option value="2">⭐⭐ Regular</option>
+                                <option value="1">⭐ Ruim</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="cliente-comentario" placeholder="Conte aos outros como o seu aparelho ficou..." style="width: 100%; padding: 10px; background: #1a1a1a; color: white; border: 1px solid #333; border-radius: 8px; margin-bottom: 15px;" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-software" style="width: 100%;">Enviar Avaliação</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
